@@ -1,4 +1,4 @@
-function Calculate-Map {
+function Get-MapResult {
     param (
         $Section,
         $ItemToCalc
@@ -29,13 +29,13 @@ $TemperatureToHumidity = $Sections[6] -split '(?m)\n'
 $HumidityToLocation = $Sections[7] -split '(?m)\n'
 foreach ($Seed in $Seeds) {
     [int64]$Item = $Seed
-    $Soil = Calculate-Map $SeedToSoil $Item
-    $Fertilizer = Calculate-Map $SoilToFertilizer $Soil
-    $Water = Calculate-Map $FertilizerToWater $Fertilizer
-    $Light = Calculate-Map $WaterToLight $Water
-    $Temperature = Calculate-Map $LightToTemperature $Light
-    $Humidity = Calculate-Map $TemperatureToHumidity $Temperature
-    $Location = Calculate-Map $HumidityToLocation $Humidity
+    $Soil = Get-MapResult $SeedToSoil $Item
+    $Fertilizer = Get-MapResult $SoilToFertilizer $Soil
+    $Water = Get-MapResult $FertilizerToWater $Fertilizer
+    $Light = Get-MapResult $WaterToLight $Water
+    $Temperature = Get-MapResult $LightToTemperature $Light
+    $Humidity = Get-MapResult $TemperatureToHumidity $Temperature
+    $Location = Get-MapResult $HumidityToLocation $Humidity
     if ($LowLocation -eq 0) {
         $LowLocation = $Location
     }
